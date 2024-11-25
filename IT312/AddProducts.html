@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Add Products</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="All-N-One-css.css">
+  <script src="AddProductSellerDashboard.js" defer></script> <!-- Link to the single JS file -->
+</head>
+<body>
+    <header>
+      <div class="header-left">
+        <a href="HomePage.html"><img src="logo.png" alt="logo" class="header-logo"></a>
+        <div class="header-title">All N One</div>
+      </div>
+      <div class="breadcrumbs">
+       <pre> <a href="HomePage.html"> Home </a>  >  <a href="SellerDashboard.html"> Seller Dashboard </a>  >  Add New Products </pre>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="new-product-form">
+        <h2>New Product</h2>
+        <fieldset>
+          <legend>Product Details</legend>
+          <form id="productForm" action="ProductsDetails.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter product name">
+              </div>
+              <div>
+                <label for="price">Price</label>
+                <input type="number" id="price" placeholder="Enter product price">
+              </div>
+            </div>
+            <div class="form-group">
+              <div>
+                <label for="category">Category</label>
+                <select id="category">
+                  <option value="">Select category</option>
+                  <option value="clothes">Clothes</option>
+                  <option value="electronics">Electronics</option>
+                  <option value="beauty">Beauty</option>
+                </select>
+              </div>
+              <div>
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" value="1" placeholder="Enter quantity" >
+              </div>
+            </div>
+            <div class="form-group">
+              <div>
+                <label for="description">Description</label>
+                <textarea id="description" placeholder="Enter product description"></textarea>
+              </div>
+              <div>
+                <label for="image">Upload Image</label>
+                <input type="file" id="image" accept="image/*">
+              </div>
+            </div>
+            <button type="submit" class="add-product-btn">Add Product</button>
+          </form>
+        </fieldset>
+      </div>
+    </div>
+
+    <footer>
+      <div class="contact">
+        <h2>Contact info</h2>
+        <div class="contact-info">
+          <a href="mailto:All_N_one@gmail.com">All_N_one@gmail.com</a>
+          <p>&nbsp; &nbsp; +0123456789</p>
+        </div>
+        <div class="contact-socials">
+          <a class="social" href="https://x.com/"><img src="x.webp" alt="X"></a>
+          <a class="social" href="https://snapchat.com"><img src="snapchat.png" alt="snapchat"></a>
+          <a class="social" href="https://tiktok.com"><img src="tiktok.webp" alt="tiktok"></a>
+          <a class="social" href="https://instagram.com"><img src="instagram.png" alt="instagram"></a>
+        </div>
+      </div>
+      <pre>&copy;2024 All N One. All Rights Reserved</pre>
+    </footer>
+</body>
+</html>
