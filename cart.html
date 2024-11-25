@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="All-N-One-css.css">
+
+</head>
+<body>
+    <header>
+      <div class="header-left">
+        <img src="logo.png" alt="logo" class="header-logo">
+        <div class="header-title">All N One</div>
+      </div>
+      <div class="breadcrumbs">
+       <pre> <a href="HomePage.html"> Home </a>  >  <a href="User1.html"> User</a>  >  <a href="cart.html">Cart</a> </pre>
+      </div>
+    </header>
+	
+	<main>
+   
+	<h2 style="margin-left: 10px;">Cart</h2>
+    
+         <div class="cart">
+        <div class="cart-items">
+            <!-- Cart items will be dynamically inserted here by JavaScript -->
+				
+        </div>
+		  <button class="empty-cart">Empty Cart</button>
+        <div class="cart-summary">
+            <p>Total Price: <strong>0.00 SR</strong></p>
+            <p>Shipping Fee: <strong>30.00 SR</strong></p>
+            <p>Total Cost: <strong>30.00 SR</strong></p>
+           
+		   
+		   
+            <button class="checkout">Checkout</button>
+			
+        </div>	
+	
+		</div>
+	</main>
+	
+<footer>
+  <div class="contact">
+    <h2>Contact info</h2>
+   
+    <div class="contact-info">
+      <a href = "mailto:All_N_one@gmail.com">
+        All_N_one@gmail.com
+      </a>
+      <p> &nbsp; &nbsp; +0123456789</p>
+    </div>
+
+    <div class="contact-socials">
+      <a class="social" href="https://x.com/">
+        <img src="x.webp" alt="X">
+      </a>
+
+      <a class="social" href="https://snapchat.com">
+       
+        <img src="snapchat.png" alt="snapchat">
+      </a>
+
+      <a class="social" href="https://tiktok.com">
+        <img src="tiktok.webp" alt="tiktok">
+      </a>
+
+      <a class="social" href="https://instagram.com">   
+        <img src="instagram.png" alt="instagram">
+      </a>
+    </div>
+
+  </div>
+
+  <pre>  &copy;2024 All N One. All Rights Reserved</pre>
+</footer>
+ <script>
+ const cartItemsContainer = document.querySelector('.cart-items');
+const emptyCartButton = document.querySelector('.empty-cart');
+const checkoutButton = document.querySelector('.checkout');
+const shippingFee = 30.00; // Shipping fee constant
+
+// Initialize cart
+function initializeCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+        emptyCartButton.style.display = 'none'; // Hide button if cart is empty
+        document.querySelector('.cart-summary p:nth-child(1) strong').textContent = '0.00 SR';
+        document.querySelector('.cart-summary p:nth-child(3) strong').textContent = shippingFee.toFixed(2) + ' SR';
+    } else {
+        renderCartItems(cart);
+    }
+}
+
+// Render cart items
+function renderCartItems(cart) {
+    cartItemsContainer.innerHTML = ''; // Clear existing items
+    let totalPrice = 0; // Initialize total price here
+
+    cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+            <img src="${item.image}" alt="Product Image">
+            <div class="details">
+                <p>${item.description}</p>
+                <button class="remove">Remove</button>
+            </div>
+            <div class="controls">
+                <span>${item.price} SR</span>
+                <input type="number" value="${item.quantity}" min="1">
+            </div>
+        `;
+
+        totalPrice += item.price * item.quantity; // Update total price
+        cartItemsContainer.appendChild(cartItem);
+
+        // Event listener for removing item
+        cartItem.querySelector('.remove').addEventListener('click', () => {
+            removeItem(item);
+        });
+
+        // Event listener for quantity change
+        const quantityInput = cartItem.querySelector('input[type="number"]');
+        quantityInput.addEventListener('change', () => {
+            updateCartTotal(); // Update total when quantity changes
+        });
+    });
+
+    // Show the "Empty Cart" button if there are items
+    emptyCartButton.style.display = 'block'; // Show button
+    updateCartTotal(totalPrice); // Update total with calculated totalPrice
+}
+
+// Remove item from cart
+function removeItem(item) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(cartItem => cartItem.name !== item.name);
+    localStorage.setItem('cart', JSON.stringify(cart));
+   
+    renderCartItems(cart);
+
+    // Hide button if cart is empty
+    if (cart.length === 0) {
+        emptyCartButton.style.display = 'none'; // Hide button
+    }
+}
+
+// Update cart total based on quantities
+function updateCartTotal() {
+    const cartItems = document.querySelectorAll('.cart-item');
+    let totalPrice = 0; // Reset total price at the start
+
+    cartItems.forEach(item => {
+        const price = parseFloat(item.querySelector('.controls span').textContent);
+        const quantity = parseInt(item.querySelector('input[type="number"]').value);
+        totalPrice += price * quantity; // Calculate total price
+    });
+
+    // Update total price and include shipping fee
+    const totalWithShipping = totalPrice + shippingFee;
+
+    document.querySelector('.cart-summary p:nth-child(1) strong').textContent = totalPrice.toFixed(2) + ' SR'; // Total price without shipping
+    document.querySelector('.cart-summary p:nth-child(3) strong').textContent = totalWithShipping.toFixed(2) + ' SR'; // Total price with shipping
+}
+
+// Empty cart functionality
+emptyCartButton.addEventListener('click', () => {
+    localStorage.removeItem('cart');
+    cartItemsContainer.innerHTML = ''; // Clear cart display
+    emptyCartButton.style.display = 'none'; // Hide button
+    document.querySelector('.cart-summary p:nth-child(1) strong').textContent = '0.00 SR';
+    document.querySelector('.cart-summary p:nth-child(3) strong').textContent = shippingFee.toFixed(2) + ' SR'; // Only shipping fee
+});
+
+// Checkout functionality
+checkoutButton.addEventListener('click', () => {
+    const totalPrice = parseFloat(document.querySelector('.cart-summary p:nth-child(1) strong').textContent);
+    if (totalPrice === 0) {
+        alert("Your cart is empty. Please add items to the cart.");
+    } else {
+        alert(`Thank you! We received your order. Total cost: ${(totalPrice + shippingFee).toFixed(2)} SR`);
+        window.location.href = 'Evaluation1.html'; // Redirect to evaluation page
+    }
+});
+
+// Initialize cart on page load
+initializeCart();
+</script>
+
+     
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="All-N-One-css.css">
+
+  <title>All N One</title>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="logo" class="header-logo">
+      <div class="header-title">All N One</div>
+    </div>
+    
+    <div class="breadcrumbs">
+       <pre> <a href="HomePage.html"> Home </a>  >  Clothes </pre>
+	   	  <a href="cart.html"> <img src="cart4.png" alt="cart" id="cart"></a>
+
+    </div>
+    
+    <div class="sort-by">
+      <label for="sort-by">Sort by:</label>
+      <select id="sort-by">
+        <option value="">Select an option</option>
+        <optgroup label="Price">
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+        </optgroup>
+        <optgroup label="Name">
+          <option value="name-asc">Name: A to Z</option>
+          <option value="name-desc">Name: Z to A</option>
+        </optgroup>
+      </select>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="product">
+      <img src="Heels.png" alt="Heels">
+      <h3>Heels</h3>
+      <p>Leather Black Heels</p>
+      <p class="price">120 SAR</p>
+      <div class="quantity-controls">
+        <button class="decrease">-</button>
+        <span class="quantity">1</span>
+        <button class="increase">+</button>
+      </div>
+      <button class="add-to-cart-btn">Add to cart</button>
+    </div>
+    <div class="product">
+      <img src="Sweater.png" alt="Sweater">
+      <h3>Sweater</h3>
+      <p>Crew Neck Grey SweatShirt</p>
+      <p class="price">70 SAR</p>
+      <div class="quantity-controls">
+        <button class="decrease">-</button>
+        <span class="quantity">1</span>
+        <button class="increase">+</button>
+      </div>
+      <button class="add-to-cart-btn">Add to cart</button>
+    </div>
+    <div class="product">
+      <img src="Tshirt.png" alt="Tshirt">
+      <h3>Shirt</h3>
+      <p>Pink Girl's T Shirt</p>
+      <p class="price">30 SAR</p>
+      <div class="quantity-controls">
+        <button class="decrease">-</button>
+        <span class="quantity">1</span>
+        <button class="increase">+</button>
+      </div>
+      <button class="add-to-cart-btn">Add to cart</button>
+    </div>
+    <div class="product">
+      <img src="Pajama.png" alt="Pajamas">
+      <h3>Pajamas</h3>
+      <p>2-Piece Pajama Set Pink/Black</p>
+      <p class="price">50 SAR</p>
+      <div class="quantity-controls">
+        <button class="decrease">-</button>
+        <span class="quantity">1</span>
+        <button class="increase">+</button>
+      </div>
+      <button class="add-to-cart-btn">Add to cart</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="contact">
+      <h2>Contact info</h2>
+      <div class="contact-info">
+        <a href="mailto:All_N_one@gmail.com">All_N_one@gmail.com</a>
+        <p>&nbsp; &nbsp; +0123456789</p>
+      </div>
+
+      <div class="contact-socials">
+        <a class="social" href="https://x.com/">
+          <img src="x.webp" alt="X">
+        </a>
+        <a class="social" href="https://snapchat.com">
+          <img src="snapchat.png" alt="snapchat">
+        </a>
+        <a class="social" href="https://tiktok.com">
+          <img src="tiktok.webp" alt="tiktok">
+        </a>
+        <a class="social" href="https://instagram.com">
+          <img src="instagram.png" alt="instagram">
+        </a>
+      </div>
+    </div>
+    <pre>&copy;2024 All N One. All Rights Reserved</pre>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sortSelect = document.getElementById('sort-by');
+      const productContainer = document.querySelector('.container');
+
+      // Array of products
+      const products = [
+        {
+          name: 'Heels',
+          description: 'Leather Black Heels',
+          price: 120,
+          image: 'Heels.png'
+        },
+        {
+          name: 'Sweater',
+          description: 'Crew Neck Grey SweatShirt',
+          price: 70,
+          image: 'Sweater.png'
+        },
+        {
+          name: 'Shirt',
+          description: 'Pink Girl\'s T Shirt',
+          price: 30,
+          image: 'Tshirt.png'
+        },
+        {
+          name: 'Pajamas',
+          description: '2-Piece Pajama Set Pink/Black',
+          price: 50,
+          image: 'Pajama.png'
+        }
+      ];
+
+      // Function to render products
+      function renderProducts(productsList) {
+        productContainer.innerHTML = '';
+        productsList.forEach(product => {
+          const productElement = document.createElement('div');
+          productElement.classList.add('product');
+
+          productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p class="price">${product.price} SAR</p>
+            <div class="quantity-controls">
+              <button class="decrease">-</button>
+              <span class="quantity">1</span>
+              <button class="increase">+</button>
+            </div>
+            <button class="add-to-cart-btn">Add to cart</button>
+          `;
+
+          productContainer.appendChild(productElement);
+        });
+      }
+
+      // Function to sort products
+      function sortProducts() {
+        const sortBy = sortSelect.value;
+        
+        let sortedProducts = [...products];
+        
+        if (sortBy === 'price-asc') {
+          sortedProducts.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price-desc') {
+          sortedProducts.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'name-asc') {
+          sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sortBy === 'name-desc') {
+          sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+        }
+        
+        renderProducts(sortedProducts);
+      }
+
+      // Handle adding products to the cart
+      function addToCart(product, quantity) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingProduct = cart.find(p => p.name === product.name);
+        
+        if (existingProduct) {
+          existingProduct.quantity += quantity;
+        } else {
+          cart.push({ ...product, quantity });
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+
+      // Event listener for sorting
+      sortSelect.addEventListener('change', sortProducts);
+      
+      // Event listener for adding products to cart and updating quantity
+      document.addEventListener('click', (e) => {
+        const productElement = e.target.closest('.product');
+        if (productElement) {
+          const productName = productElement.querySelector('h3').textContent;
+          const product = products.find(p => p.name === productName);
+          
+          if (e.target.classList.contains('add-to-cart-btn')) {
+            const quantity = parseInt(productElement.querySelector('.quantity').textContent);
+            addToCart(product, quantity);
+          }
+
+          if (e.target.classList.contains('increase')) {
+            const quantitySpan = productElement.querySelector('.quantity');
+            quantitySpan.textContent = parseInt(quantitySpan.textContent) + 1;
+          }
+
+          if (e.target.classList.contains('decrease')) {
+            const quantitySpan = productElement.querySelector('.quantity');
+            if (parseInt(quantitySpan.textContent) > 1) {
+              quantitySpan.textContent = parseInt(quantitySpan.textContent) - 1;
+            }
+          }
+        }
+      });
+
+      // Initial render of products
+      renderProducts(products);
+    });
+  </script>
+</body>
+</html>
